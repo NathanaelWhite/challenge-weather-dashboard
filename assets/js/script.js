@@ -3,6 +3,7 @@
 // add jquery and bootstrap api links
 
 // make css and style 
+// look at bootstrap card layouts to create each day and its weather
 
 // document.ready when search button is clicked (google)
 // reset search value to an empty string 

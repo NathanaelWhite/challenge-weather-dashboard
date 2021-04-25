@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Dashboard</title>
+    <!-- links for style.css and bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Weather Dashboard</h1>
+    </header>
+    <main class="flex-row justify-space-between">
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <h3 class="card-header text-uppercase">Search By City</h3>
+          <form id="user-form" class="card-body">
+            <label class="form-label" for="city">City</label>
+            <input
+              name="city"
+              id="city"
+              type="text"
+              autofocus="true"
+              class="fomr-input"
+            />
+            <button type="submit" class="btn">Get Weather</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-8">
+        <!-- <h2 class="subtitle">
+          Showing Weather for: <span id="search-term"></span>
+        </h2> -->
+        <div id="weather-container" class="list-group"></div>
+      </div>
+    </main>
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
