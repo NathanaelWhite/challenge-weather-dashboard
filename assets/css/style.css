@@ -21,6 +21,7 @@ body {
 header {
     color: var(--primary);
     background-color: var(--light-color);
+    padding-left: 25px;
 }
 
 
