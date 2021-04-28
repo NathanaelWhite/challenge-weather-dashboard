@@ -14,26 +14,37 @@ $(document).ready(function () {
     var cityName = cityInputEl.val();
 
     if (cityName) {
-      console.log(cityName);
+      getCityData(cityName);
+
+      weatherContainerEl.text("");
+      cityInputEl.val("");
     } else {
       alert("please enter a city name");
     }
   };
 
+  var getCityData = function (city) {
+    // format the open weather url
+    var apiUrl =
+      "https://api.openweathermap.org/data/2.5/weather?q=" +
+      city +
+      "&units=imperial&appid=11f68b1fe37a40e7c0132a32fccac555";
+    fetch(apiUrl).then(function (response) {
+      // request was successful
+      if (response.ok) {
+        console.log(response);
+        response.json().then(function (data) {
+          console.log(data);
+        });
+      } else {
+        alert("error" + response.statusText);
+      }
+    });
+  };
+
   var cityInputEl = $("#cityName");
   var userFormEl = $("#user-form");
 
-  // var getCityData = function(city) {
-  //     // format the open weather url
-  //     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=11f68b1fe37a40e7c0132a32fccac555";
-
-  //     // make a request to Url
-  //     fetch(apiUrl).then(function (response) {
-  //         response.json().then(function(data) {
-  //             console.log(data);
-  //         });
-  //     });
-  // };
   // getCityData(city);
   // var userFormEl = $("#user-form")
   // var cityInputEl = $("#cityName");
