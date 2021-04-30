@@ -117,6 +117,8 @@ $(document).ready(function () {
 
           for (var i = 0; i < 5; i++) {
             // where you left off
+            let d1 = $("<div>");
+            
             
           }
         });

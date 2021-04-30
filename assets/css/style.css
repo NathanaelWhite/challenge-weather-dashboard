@@ -74,3 +74,9 @@ main {
     padding: 10px;
     border-radius: 5px;
 }
+
+#five-day-container {
+    color: var(--primary);
+    display: flex;
+    justify-content: space-evenly;
+}
