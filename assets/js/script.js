@@ -1,7 +1,9 @@
 $(document).ready(function () {
   var weatherContainerEl = $("#weather-container");
+  var fiveDayContainerEl = $("#five-day-container");
   var currentDate = moment().format("MM DD YY");
   var cityInputEl = $("#user-form");
+
   // document.ready when search button is clicked (google)
   // reset search value to an empty string
   // on click, make fetch request (open weather)
@@ -53,7 +55,7 @@ $(document).ready(function () {
           img1.attr("src", iconurl);
           // <img src="url">
           //img.attr("src",iconurl);
-          d1.append(img1);
+          h1.append(img1);
 
           // temp
           var p2 = $("<p>");
@@ -85,8 +87,8 @@ $(document).ready(function () {
             if (response.ok) {
               response.json().then(function (uvdata) {
                 var uv = uvdata.current.uvi;
+                p5.text("UVI: " + uv);
                 console.log(uv);
-                p5.text(uv);
                 d1.append(p5);
               });
             }
@@ -102,17 +104,30 @@ $(document).ready(function () {
 
   var fiveDay = function (city) {
     var fiveDayUrl =
-      "api.openweathermap.org/data/2.5/forecast?q=" +
+      "https://api.openweathermap.org/data/2.5/forecast?q=" +
       city +
       "&appid=11f68b1fe37a40e7c0132a32fccac555";
     console.log(fiveDayUrl);
+    fetch(fiveDayUrl).then(function (response) {
+      // request was successful
+      if (response.ok) {
+        console.log(response);
+        response.json().then(function (fiveDayData) {
+          console.log(fiveDayData);
 
-    // for(var i=0;i<5;i++){
-    //   data[i*8].icon
-    //dt_txt is the specific date. make it pretty with momentjs
-    //moment(dt_txt).format("ll")
-    // }
+          for (var i = 0; i < 5; i++) {
+            // where you left off
+            
+          }
+        });
+      }
+    });
   };
+  // for(var i=0;i<5;i++){
+  //   data[i*8].icon
+  //dt_txt is the specific date. make it pretty with momentjs
+  //moment(dt_txt).format("ll")
+  // }
 
   var cityInputEl = $("#cityName");
   var userFormEl = $("#user-form");

@@ -67,3 +67,10 @@ main {
     flex-direction: column;
     flex-wrap: wrap;
   }
+
+#weather-container {
+    background-color: var(--light-color);
+    color: var(--primary);
+    padding: 10px;
+    border-radius: 5px;
+}
