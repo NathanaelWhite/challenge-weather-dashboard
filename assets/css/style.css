@@ -73,10 +73,22 @@ main {
     color: var(--primary);
     padding: 10px;
     border-radius: 5px;
+    margin: 5px;
 }
 
 #five-day-container {
     color: var(--primary);
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: nowrap;
+}
+
+.p5-low {
+    background-color: green;
+}
+.p5-moderate {
+    background-color: orange;
+}
+.p5-high {
+    background-color: red;
 }

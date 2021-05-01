@@ -1,14 +1,18 @@
 $(document).ready(function () {
   var weatherContainerEl = $("#weather-container");
-  var fiveDayContainerEl = $("#five-day-container");
+  var weatherEL = $("#weather");
   var currentDate = moment().format("MM DD YY");
   var cityInputEl = $("#user-form");
-
+  
   // document.ready when search button is clicked (google)
   // reset search value to an empty string
   // on click, make fetch request (open weather)
-
+  weatherEL.css("display", "none");
+  
+  
   var formSubmitHandler = function (event) {
+    
+    weatherEL.css("display", "block");
     // prevent page from refreshing
     event.preventDefault();
 
@@ -24,9 +28,11 @@ $(document).ready(function () {
     } else {
       alert("please enter a city name");
     }
+    
   };
 
   var getCityData = function (city) {
+    
     // format the open weather url
     //  use "var units = '&units=imperial'";
     var apiUrl =
@@ -88,6 +94,15 @@ $(document).ready(function () {
               response.json().then(function (uvdata) {
                 var uv = uvdata.current.uvi;
                 p5.text("UVI: " + uv);
+                if (uv < 3) {
+                  p5.attr("class", "bg-success");
+                }
+                else if (uv < 7) {
+                  p5.attr("class", "bg-warning");
+                }
+                else {
+                  p5.attr("class", "bg-danger");
+                }
                 console.log(uv);
                 d1.append(p5);
               });
@@ -113,13 +128,57 @@ $(document).ready(function () {
       if (response.ok) {
         console.log(response);
         response.json().then(function (fiveDayData) {
-          console.log(fiveDayData);
+          console.log(fiveDayData.list[9].dt_txt);
+          let d1 = $("<div>");
+          d1.attr("id", "five-day-container");
+          d1.attr("class", "row");
 
           for (var i = 0; i < 5; i++) {
+            
             // where you left off
-            let d1 = $("<div>");
-            
-            
+            //   <div id="five-day-container" class="row">
+            // <div class="card">
+            //   <div class="card-body">
+            //     <h5>date</h5>
+            //     <img/>
+            //     <p>wind</p>
+            //     <p>temp</p>
+            //     <p>humidity</p>
+            //   </div>
+            // </div>
+
+            let d2 = $("<div>");
+            d2.attr("class", "card");
+
+            let d3 = $("<div>");
+            d3.attr("class", "card-body");
+
+            let h5 = $("<h5>");
+            h5.text(fiveDayData.list[9].dt_txt);
+
+            d3.append(h5);
+
+            let img = $("<img>");
+            var iconcode = fiveDayData.list[2].weather[0].icon;
+            var iconurl =
+              "http://openweathermap.org/img/w/" + iconcode + ".png";
+            console.log(iconurl);
+            img.attr("src", iconurl);
+            d3.append(img);
+
+            let p1 = $("<p>");
+            p1.text("wind: " + fiveDayData.list[4].wind.speed);
+            d3.append(p1);
+            let p2 = $("<p>");
+            p2.text("temp: " + fiveDayData.list[2].main.temp);
+            d3.append(p2);
+            let p3 = $("<p>");
+            p3.text("humidity: " + fiveDayData.list[2].main.humidity);
+            d3.append(p3);
+
+            d2.append(d3);
+            d1.append(d2);
+            weatherEL.append(d1);
           }
         });
       }
