@@ -1,23 +1,22 @@
 $(document).ready(function () {
   var weatherContainerEl = $("#weather-container");
-  var weatherEL = $("#weather");
+  var weatherEl = $("#weather");
   var currentDate = moment().format("MM DD YY");
   var cityInputEl = $("#user-form");
-  
+
   // document.ready when search button is clicked (google)
   // reset search value to an empty string
   // on click, make fetch request (open weather)
-  weatherEL.css("display", "none");
-  
-  
+  weatherEl.css("display", "none");
+
   var formSubmitHandler = function (event) {
-    
-    weatherEL.css("display", "block");
+    weatherEl.css("display", "block");
     // prevent page from refreshing
     event.preventDefault();
 
     // get vlue from input element
     var cityName = cityInputEl.val();
+    console.log(cityName);
 
     if (cityName) {
       getCityData(cityName);
@@ -28,11 +27,10 @@ $(document).ready(function () {
     } else {
       alert("please enter a city name");
     }
-    
+    saveWeather(cityName);
   };
 
   var getCityData = function (city) {
-    
     // format the open weather url
     //  use "var units = '&units=imperial'";
     var apiUrl =
@@ -96,11 +94,9 @@ $(document).ready(function () {
                 p5.text("UVI: " + uv);
                 if (uv < 3) {
                   p5.attr("class", "bg-success");
-                }
-                else if (uv < 7) {
+                } else if (uv < 7) {
                   p5.attr("class", "bg-warning");
-                }
-                else {
+                } else {
                   p5.attr("class", "bg-danger");
                 }
                 console.log(uv);
@@ -121,21 +117,19 @@ $(document).ready(function () {
     var fiveDayUrl =
       "https://api.openweathermap.org/data/2.5/forecast?q=" +
       city +
-      "&appid=11f68b1fe37a40e7c0132a32fccac555";
+      "&units=imperial&appid=11f68b1fe37a40e7c0132a32fccac555";
     console.log(fiveDayUrl);
     fetch(fiveDayUrl).then(function (response) {
       // request was successful
       if (response.ok) {
         console.log(response);
         response.json().then(function (fiveDayData) {
-          console.log(fiveDayData.list[9].dt_txt);
+          console.log(fiveDayData);
           let d1 = $("<div>");
           d1.attr("id", "five-day-container");
           d1.attr("class", "row");
 
-          for (var i = 0; i < 5; i++) {
-            
-            // where you left off
+          for (var i = 1; i < 6; i++) {
             //   <div id="five-day-container" class="row">
             // <div class="card">
             //   <div class="card-body">
@@ -154,12 +148,12 @@ $(document).ready(function () {
             d3.attr("class", "card-body");
 
             let h5 = $("<h5>");
-            h5.text(fiveDayData.list[9].dt_txt);
+            h5.text(fiveDayData.list[(i*8)-1].dt_txt);
 
             d3.append(h5);
 
             let img = $("<img>");
-            var iconcode = fiveDayData.list[2].weather[0].icon;
+            var iconcode = fiveDayData.list[(i*8)-1].weather[0].icon;
             var iconurl =
               "http://openweathermap.org/img/w/" + iconcode + ".png";
             console.log(iconurl);
@@ -167,22 +161,32 @@ $(document).ready(function () {
             d3.append(img);
 
             let p1 = $("<p>");
-            p1.text("wind: " + fiveDayData.list[4].wind.speed);
+            p1.text("wind: " + fiveDayData.list[(i*8)-1].wind.speed);
             d3.append(p1);
             let p2 = $("<p>");
-            p2.text("temp: " + fiveDayData.list[2].main.temp);
+            p2.text("temp: " + fiveDayData.list[(i*8)-1].main.temp);
             d3.append(p2);
             let p3 = $("<p>");
-            p3.text("humidity: " + fiveDayData.list[2].main.humidity);
+            p3.text("humidity: " + fiveDayData.list[(i*8)-1].main.humidity);
             d3.append(p3);
 
             d2.append(d3);
             d1.append(d2);
-            weatherEL.append(d1);
+            weatherEl.append(d1);
           }
         });
       }
     });
+  };
+  
+
+  var saveWeather = function(city) {
+    var localStorageCities = JSON.parse(localStorage.getItem("savedCities"));
+    if (!localStorageCities) {
+      localStorageCities = [] 
+    }
+    localStorageCities.push(city);
+    localStorage.setItem("savedCities", JSON.stringify(localStorageCities));
   };
   // for(var i=0;i<5;i++){
   //   data[i*8].icon
@@ -194,9 +198,6 @@ $(document).ready(function () {
   var userFormEl = $("#user-form");
 
   // create a func to append search history
-
-  // create function to searchWeather and use AJAX to make a GET request
-  // make fetch() request.
 
   $(userFormEl).submit(formSubmitHandler);
 });

@@ -39,6 +39,7 @@ main {
 
 .card {
     background-color: var(--light-color);
+    margin: 5px;
 }
 
 .form-label {
@@ -68,6 +69,10 @@ main {
     flex-wrap: wrap;
   }
 
+#weather {
+    padding: 0;
+}
+
 #weather-container {
     background-color: var(--light-color);
     color: var(--primary);
@@ -81,6 +86,7 @@ main {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: nowrap;
+    padding: 15px;
 }
 
 .p5-low {
