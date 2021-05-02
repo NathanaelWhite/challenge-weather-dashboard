@@ -114,6 +114,7 @@ $(document).ready(function () {
   };
 
   var fiveDay = function (city) {
+    $("#five-day-container").empty();
     var fiveDayUrl =
       "https://api.openweathermap.org/data/2.5/forecast?q=" +
       city +
@@ -124,11 +125,9 @@ $(document).ready(function () {
       if (response.ok) {
         console.log(response);
         response.json().then(function (fiveDayData) {
-          console.log(fiveDayData);
-          let d1 = $("<div>");
-          d1.attr("id", "five-day-container");
-          d1.attr("class", "row");
 
+          let d1 = $("#five-day-container");
+          
           for (var i = 1; i < 6; i++) {
             //   <div id="five-day-container" class="row">
             // <div class="card">
