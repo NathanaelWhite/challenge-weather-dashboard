@@ -12,6 +12,6 @@ An application that lets the user search for specific cities and be presented wi
 * Moment.js
 
 ## Website
-
+![image](https://user-images.githubusercontent.com/77940998/116822429-56f5b080-ab44-11eb-8112-2c935853fafa.png)
 
 ## Link
